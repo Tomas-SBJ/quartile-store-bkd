@@ -1,6 +1,15 @@
+using QuartileStore.Api;
+using QuartileStore.Api.Middleware;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddApi();
+builder.Services.AddControllers();
+
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+app.UseMiddleware<ExceptionHandlerMiddleware>();
+
+app.MapControllers();
 
 app.Run();

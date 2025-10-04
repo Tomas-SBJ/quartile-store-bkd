@@ -8,35 +8,140 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f936ea0-e0de-4b84-acbf-37d661c7cea9" name="Changes" comment="" />
+    <list default="true" id="5f936ea0-e0de-4b84-acbf-37d661c7cea9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Api/DependencyInjection.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Api/Middleware/ExceptionHandlerMiddleware.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/DependencyInjection.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Domain/Entities/Abstracts/BaseEntity.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Domain/Entities/Abstracts/IBaseRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Domain/Entities/Companies/Company.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Domain/Entities/Companies/ICompanyRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Domain/Entities/Products/IProductRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Domain/Entities/Products/Product.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Dtos/Stores/CreateStoreDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Dtos/Stores/StoreDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Dtos/Stores/UpdateStoreDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Exceptions/EntityAlreadyExistsException.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Exceptions/EntityNotFoundException.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Infrastructure/SqlServer/Contexts/IScopedDatabaseContext.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Infrastructure/SqlServer/Contexts/QuartileDatabaseContext.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Infrastructure/SqlServer/Contexts/ScopedDatabaseContext.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Infrastructure/SqlServer/Mappings/CompanyMapping.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Infrastructure/SqlServer/Mappings/ProductMapping.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Infrastructure/SqlServer/Mappings/StoreMapping.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Infrastructure/SqlServer/Repositories/BaseRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Infrastructure/SqlServer/Repositories/CompanyRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Infrastructure/SqlServer/Repositories/ProductRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Infrastructure/SqlServer/Repositories/StoreRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Services/CompanyService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuartileStore.Commons/Services/Contracts/ICompanyService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.QuartileStore/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.QuartileStore/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Api/Controllers/StoreController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Api/Controllers/StoreController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Api/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Api/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Api/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Api/Properties/launchSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Api/QuartileStore.Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Api/QuartileStore.Api.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Api/obj/Debug/net9.0/QuartileStore.Api.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Api/obj/Debug/net9.0/QuartileStore.Api.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Api/obj/Debug/net9.0/QuartileStore.Api.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Api/obj/Debug/net9.0/QuartileStore.Api.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Api/obj/Debug/net9.0/QuartileStore.Api.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Api/obj/Debug/net9.0/QuartileStore.Api.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Api/obj/QuartileStore.Api.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Api/obj/QuartileStore.Api.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Api/obj/QuartileStore.Api.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Api/obj/QuartileStore.Api.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Api/obj/QuartileStore.Api.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Api/obj/QuartileStore.Api.csproj.nuget.g.targets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Api/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Api/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Api/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Api/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Api/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Api/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Api/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Api/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Commons/Domain/Entities/Stores/IStoreRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Commons/Domain/Entities/Stores/IStoreRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Commons/Domain/Entities/Stores/Store.cs" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Commons/Domain/Entities/Stores/Store.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Commons/QuartileStore.Commons.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Commons/QuartileStore.Commons.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Commons/Services/Contracts/IStoreService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Commons/Services/Contracts/IStoreService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Commons/Services/StoreService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Commons/Services/StoreService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Commons/obj/Debug/net9.0/QuartileStore.Commons.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Commons/obj/Debug/net9.0/QuartileStore.Commons.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Commons/obj/Debug/net9.0/QuartileStore.Commons.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Commons/obj/Debug/net9.0/QuartileStore.Commons.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Commons/obj/Debug/net9.0/QuartileStore.Commons.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Commons/obj/Debug/net9.0/QuartileStore.Commons.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Commons/obj/QuartileStore.Commons.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Commons/obj/QuartileStore.Commons.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Commons/obj/QuartileStore.Commons.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Commons/obj/QuartileStore.Commons.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Commons/obj/QuartileStore.Commons.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Commons/obj/QuartileStore.Commons.csproj.nuget.g.targets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Commons/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Commons/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Commons/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Commons/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Commons/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Commons/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Commons/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Commons/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuartileStore.Commons/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/QuartileStore.Commons/obj/rider.project.restore.info" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DpaMonitoringSettings">
+    <option name="firstShow" value="false" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Tomas-SBJ&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Tomas-SBJ/quartile-store-bkd.git&quot;,
+    &quot;accountId&quot;: &quot;04d3dee4-f9c0-4caa-bdd4-473f7209c01a&quot;
+  }
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/QuartileStore.Api/Controllers/StoreController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Api/DependencyInjection.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Api/Middleware/ExceptionHandlerMiddleware.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/DependencyInjection.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Domain/Entities/Abstracts/BaseEntity.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Domain/Entities/Abstracts/IBaseRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Domain/Entities/Companies/Company.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Domain/Entities/Companies/ICompanyRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Domain/Entities/Products/IProductRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Domain/Entities/Products/Product.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Domain/Entities/Stores/IStoreRepository.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Domain/Entities/Stores/Store.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Dtos/Stores/CreateStoreDto.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Dtos/Stores/StoreDto.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Dtos/Stores/UpdateStoreDto.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Exceptions/EntityAlreadyExistsException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Exceptions/EntityNotFoundException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Infrastructure/SqlServer/Contexts/IScopedDatabaseContext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Infrastructure/SqlServer/Contexts/QuartileDatabaseContext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Infrastructure/SqlServer/Contexts/ScopedDatabaseContext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Infrastructure/SqlServer/Mappings/CompanyMapping.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Infrastructure/SqlServer/Mappings/ProductMapping.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Infrastructure/SqlServer/Mappings/StoreMapping.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Infrastructure/SqlServer/Repositories/BaseRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Infrastructure/SqlServer/Repositories/CompanyRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Infrastructure/SqlServer/Repositories/ProductRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Infrastructure/SqlServer/Repositories/StoreRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Services/CompanyService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Services/Contracts/ICompanyService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Services/Contracts/IStoreService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/QuartileStore.Commons/Services/StoreService.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="33ZO2HXnI2zaLV7Ll37sOJNksWU" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    ".NET Launch Settings Profile.QuartileStore.Api: http.executor": "Debug",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -87,7 +192,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1759520919191</updated>
-      <workItem from="1759520920301" duration="1938000" />
+      <workItem from="1759520920301" duration="22885000" />
+      <workItem from="1759618722724" duration="3453000" />
     </task>
     <servers />
   </component>
