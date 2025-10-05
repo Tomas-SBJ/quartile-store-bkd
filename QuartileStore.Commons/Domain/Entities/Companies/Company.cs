@@ -10,4 +10,10 @@ public class Company : BaseEntity
     public string CountryCode { get; set; }
 
     public virtual List<Store> Stores { get; set; } = [];
+
+    public void Update(string name, string countryCode)
+    {
+        Name = name;
+        CountryCode = countryCode;
+    }
 }

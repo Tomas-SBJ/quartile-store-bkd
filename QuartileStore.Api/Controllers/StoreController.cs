@@ -26,7 +26,7 @@ public class StoreController(IStoreService storeService) : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll(int companyCode)
+    public async Task<IActionResult> GetStores(int companyCode)
     {
         return Ok(await storeService.GetAllAsync(companyCode));
     }

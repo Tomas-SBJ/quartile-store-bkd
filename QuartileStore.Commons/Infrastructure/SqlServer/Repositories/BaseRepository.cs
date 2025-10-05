@@ -16,9 +16,11 @@ internal class BaseRepository<TEntity>(
         var newEntity = await Entity.AddAsync(entity);
         return newEntity.Entity;
     }
-
+    
     public async Task<TEntity?> SelectOneByAsync(Expression<Func<TEntity, bool>> predicate) =>
         await Entity.FirstOrDefaultAsync(predicate);
-    
+
     public async Task<bool> Exists(Expression<Func<TEntity, bool>> predicate) => await Entity.AnyAsync(predicate);
+    
+    public void Delete(TEntity entity) => Entity.Remove(entity);
 }

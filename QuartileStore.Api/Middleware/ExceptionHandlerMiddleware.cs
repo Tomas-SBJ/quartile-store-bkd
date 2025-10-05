@@ -45,6 +45,16 @@ public class ExceptionHandlerMiddleware(RequestDelegate next)
                 };
                 break;
             
+            case DeleteConflictException deleteConflictException:
+                context.Response.StatusCode = StatusCodes.Status409Conflict;
+                response = new ApiErrorResponse
+                {
+                    StatusCode = context.Response.StatusCode,
+                    Title = deleteConflictException.Title,
+                    Detail = deleteConflictException.Message
+                };
+                break;
+            
             default:
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 response = new ApiErrorResponse
