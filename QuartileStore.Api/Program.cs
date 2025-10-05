@@ -1,14 +1,45 @@
+using Microsoft.AspNetCore.Mvc;
 using QuartileStore.Api;
 using QuartileStore.Api.Middleware;
+using QuartileStore.Commons.Domain.Constants;
+using QuartileStore.Commons.Dtos.Errors;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApi(builder.Configuration);
-builder.Services.AddControllers();
+
+builder.Services.AddControllers()
+    .ConfigureApiBehaviorOptions(options =>
+    {
+        options.InvalidModelStateResponseFactory = context =>
+        {
+            var validationErrors = context.ModelState
+                .Where(e => e.Value!.Errors.Count > 0)
+                .ToDictionary(
+                    x => x.Key, 
+                    x => x.Value!.Errors.Select(e => e.ErrorMessage).ToArray());
+
+            var errorResponse = new ApiErrorResponse
+            {
+                StatusCode = StatusCodes.Status400BadRequest,
+                Title = ApiErrorTitle.ValidationError,
+                Detail = "The request failed due to one or more validation errors",
+                Errors = validationErrors
+            };
+            
+            return new BadRequestObjectResult(errorResponse);
+        };
+    });
 
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionHandlerMiddleware>();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.MapControllers();
 

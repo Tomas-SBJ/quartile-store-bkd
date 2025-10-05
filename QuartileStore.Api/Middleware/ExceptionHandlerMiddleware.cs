@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using QuartileStore.Commons.Dtos.Errors;
 using QuartileStore.Commons.Exceptions;
 
@@ -66,6 +68,12 @@ public class ExceptionHandlerMiddleware(RequestDelegate next)
                 break;
         }
 
-        await context.Response.WriteAsJsonAsync(response);
+        var serializerOptions = new JsonSerializerOptions
+        {
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+        
+        await context.Response.WriteAsJsonAsync(response, serializerOptions);
     }
 }
