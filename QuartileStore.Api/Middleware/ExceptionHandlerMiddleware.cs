@@ -1,3 +1,4 @@
+using QuartileStore.Commons.Dtos.Errors;
 using QuartileStore.Commons.Exceptions;
 
 namespace QuartileStore.Api.Middleware;
@@ -20,23 +21,38 @@ public class ExceptionHandlerMiddleware(RequestDelegate next)
     {
         context.Response.ContentType = "application/json";
 
-        object response;
+        ApiErrorResponse response;
 
         switch (exception)
         {
             case EntityNotFoundException entityNotFoundException:
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
-                response = new { error = entityNotFoundException.Message };
+                response = new ApiErrorResponse
+                {
+                    StatusCode = context.Response.StatusCode,
+                    Title = entityNotFoundException.Title,
+                    Detail = entityNotFoundException.Message
+                };
                 break;
             
             case EntityAlreadyExistsException entityAlreadyExistsException:
                 context.Response.StatusCode = StatusCodes.Status409Conflict;
-                response = new { error = entityAlreadyExistsException.Message };
+                response = new ApiErrorResponse
+                {
+                    StatusCode = context.Response.StatusCode,
+                    Title = entityAlreadyExistsException.Title,
+                    Detail = entityAlreadyExistsException.Message
+                };
                 break;
             
             default:
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                response = new { error = "An internal server error has occurred" };
+                response = new ApiErrorResponse
+                {
+                    StatusCode = context.Response.StatusCode,
+                    Title = "Internal Server Error",
+                    Detail = "An internal server error has occurred"
+                };
                 break;
         }
 

@@ -11,6 +11,12 @@ internal class BaseRepository<TEntity>(
 {
     protected readonly DbSet<TEntity> Entity = dbContext.Set<TEntity>();
 
+    public async Task<TEntity> CreateAsync(TEntity entity)
+    {
+        var newEntity = await Entity.AddAsync(entity);
+        return newEntity.Entity;
+    }
+
     public async Task<TEntity?> SelectOneByAsync(Expression<Func<TEntity, bool>> predicate) =>
         await Entity.FirstOrDefaultAsync(predicate);
     

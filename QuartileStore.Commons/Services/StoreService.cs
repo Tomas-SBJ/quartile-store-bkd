@@ -2,13 +2,15 @@ using QuartileStore.Commons.Domain.Entities.Companies;
 using QuartileStore.Commons.Domain.Entities.Stores;
 using QuartileStore.Commons.Dtos.Stores;
 using QuartileStore.Commons.Exceptions;
+using QuartileStore.Commons.Infrastructure.Transactions;
 using QuartileStore.Commons.Services.Contracts;
 
 namespace QuartileStore.Commons.Services;
 
 internal class StoreService(
     IStoreRepository storeRepository,
-    ICompanyRepository companyRepository
+    ICompanyRepository companyRepository,
+    IUnitOfWork unitOfWork
 ) : IStoreService
 {
     public async Task<StoreDto> CreateAsync(int companyCode, CreateStoreDto storeDto)
@@ -23,7 +25,7 @@ internal class StoreService(
             x.CompanyId == company.Id);
 
         if (storeAlreadyExists)
-            throw new EntityAlreadyExistsException($"Store code {storeDto.Code} is already created");
+            throw new EntityAlreadyExistsException($"Store with code {storeDto.Code} already exists");
 
         var store = new Store
         {
@@ -35,7 +37,8 @@ internal class StoreService(
         };
 
         await storeRepository.CreateAsync(store);
-
+        await unitOfWork.Commit();
+        
         return new StoreDto(store.Code, store.Company.Code, store.Name, store.Address);
     }
 
@@ -48,8 +51,8 @@ internal class StoreService(
 
         store.Update(storeDto.Name, storeDto.Address);
 
-        storeRepository.UpdateAsync(store);
-
+        await unitOfWork.Commit();
+        
         return store;
     }
 
@@ -73,6 +76,13 @@ internal class StoreService(
         return store;
     }
 
-    public async Task<List<Store>> GetAllAsync(int companyCode) => 
-        await storeRepository.SelectAllByCompanyAsync(companyCode);
+    public async Task<List<Store>> GetAllAsync(int companyCode)
+    {
+        var company = await companyRepository.SelectOneByAsync(x => x.Code == companyCode);
+
+        if (company is null)
+            throw new EntityNotFoundException($"Company with code: {companyCode} was not found");
+
+        return await storeRepository.SelectAllByCompanyAsync(company.Id);
+    }
 }

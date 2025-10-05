@@ -20,21 +20,21 @@ public class StoreController(IStoreService storeService) : ControllerBase
     }
 
     [HttpGet("{code:int}")]
-    public IActionResult GetStore(int code, int companyCode)
+    public async Task<IActionResult> GetStore(int code, int companyCode)
     {
-        return Ok(storeService.GetAsync(code, companyCode));
+        return Ok(await storeService.GetAsync(code, companyCode));
     }
 
     [HttpGet]
-    public IActionResult GetAll(int companyCode)
+    public async Task<IActionResult> GetAll(int companyCode)
     {
-        return Ok(storeService.GetAllAsync(companyCode));
+        return Ok(await storeService.GetAllAsync(companyCode));
     }
 
     [HttpPut("{code:int}")]
-    public IActionResult Update(int code, int companyCode, [FromBody] UpdateStoreDto updateStoreDto)
+    public async Task<IActionResult> Update(int code, int companyCode, [FromBody] UpdateStoreDto updateStoreDto)
     {
-        return Ok(storeService.UpdateAsync(code, companyCode, updateStoreDto));
+        return Ok(await storeService.UpdateAsync(code, companyCode, updateStoreDto));
     }
 
     [HttpDelete("{code:int}")]

@@ -1,14 +1,10 @@
-using Microsoft.EntityFrameworkCore.Query.Internal;
+using QuartileStore.Commons.Domain.Constants;
 
 namespace QuartileStore.Commons.Exceptions;
 
-public class EntityAlreadyExistsException : Exception
+public class EntityAlreadyExistsException(
+    string message
+) : Exception(message)
 {
-    public EntityAlreadyExistsException(string message) : base(message)
-    {
-    }
-
-    public EntityAlreadyExistsException(string message, Exception innerException) : base(message, innerException)
-    {
-    }
+    public string Title { get; } = ApiErrorTitle.EntityAlreadyExists;
 }

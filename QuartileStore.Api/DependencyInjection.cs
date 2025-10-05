@@ -4,8 +4,8 @@ namespace QuartileStore.Api;
 
 public static class DependencyInjection
 {
-    public static void AddApi(this IServiceCollection services)
+    public static void AddApi(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddCommons();
+        services.AddCommons(configuration);
     }
 }

@@ -9,5 +9,5 @@ public class Company : BaseEntity
     public string Name { get; set; }
     public string CountryCode { get; set; }
 
-    public List<Store> Stores { get; set; } = [];
+    public virtual List<Store> Stores { get; set; } = [];
 }

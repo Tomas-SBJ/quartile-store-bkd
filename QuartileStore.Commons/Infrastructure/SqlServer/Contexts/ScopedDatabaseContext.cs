@@ -1,6 +1,6 @@
 namespace QuartileStore.Commons.Infrastructure.SqlServer.Contexts;
 
-internal class ScopedDatabaseContext(QuartileDatabaseContext dbContext) : IScopedDatabaseContext
+public class ScopedDatabaseContext(QuartileDatabaseContext context) : IScopedDatabaseContext
 {
-    public QuartileDatabaseContext Context { get; } = dbContext;
+    public QuartileDatabaseContext Context { get; } = context;
 }

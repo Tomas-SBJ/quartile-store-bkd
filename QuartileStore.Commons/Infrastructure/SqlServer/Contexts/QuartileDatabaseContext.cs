@@ -10,16 +10,14 @@ public class QuartileDatabaseContext(DbContextOptions<QuartileDatabaseContext> o
 {
     public DbSet<Company> Companies { get; set; }
     public DbSet<Store> Stores { get; set; }
-    public DbSet<Product> Products { get; set; }
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasDefaultSchema("quartile");
-        
-        modelBuilder.ApplyConfiguration(new StoreMapping());
-        modelBuilder.ApplyConfiguration(new ProductMapping());
+
         modelBuilder.ApplyConfiguration(new CompanyMapping());
-        
+        modelBuilder.ApplyConfiguration(new StoreMapping());
+
         base.OnModelCreating(modelBuilder);
     }
 }
