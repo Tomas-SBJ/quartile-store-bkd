@@ -210,7 +210,7 @@ public class CompanyServiceTests
     }
 
     [Fact]
-    public async Task DeleteAsync_WhenCompanyHasStores_ShouldThrowDeleteConflictExeption()
+    public async Task DeleteAsync_WhenCompanyHasStores_ShouldThrowDeleteConflictException()
     {
         const int companyCode = 1;
 
