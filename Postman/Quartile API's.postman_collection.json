@@ -1,0 +1,1858 @@
+{
+	"info": {
+		"_postman_id": "5f1569e1-3e6b-4c60-8101-1af8d12965d8",
+		"name": "Quartile API's",
+		"description": "# 🚀 Get started here\n\nThis collection guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this collection**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these request types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT and PATCH requests.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a variable called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Tests\" tab**\n\nTests help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/b5f280a7-4b09-48ec-857f-0a7ed99d7ef8/U2NyZWVuc2hvdCAyMDIzLTAzLTI3IGF0IDkuNDcuMjggUE0ucG5n\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n- Add more scripts in \"Tests\" to verify if the API works as expected and execute flows.\n    \n\n## ℹ️ Resources\n\n[Building requests](https://learning.postman.com/docs/sending-requests/requests/)  \n[Authorizing requests](https://learning.postman.com/docs/sending-requests/authorization/)  \n[Using variables](https://learning.postman.com/docs/sending-requests/variables/)  \n[Managing environments](https://learning.postman.com/docs/sending-requests/managing-environments/)  \n[Writing scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11027129"
+	},
+	"item": [
+		{
+			"name": "Companies",
+			"item": [
+				{
+					"name": "Create Company (Success 201)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 201 Created\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Response body should contain a 'code' property\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('code');",
+									"    ",
+									"    if (jsonData.code) {",
+									"        pm.collectionVariables.set(\"createdCompanyCode\", jsonData.code);",
+									"        console.log(\"Saved company code: \" + jsonData.code);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": 1,\n    \"name\": \"First Company\",\n    \"countryCode\": \"BRA\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/companies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Company - Fails, Conflict (409)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 409 Conflict\", function () {",
+									"    pm.response.to.have.status(409);",
+									"});",
+									"",
+									"pm.test(\"Error response should have the correct structure and title\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('title', 'Entity Already Exists');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": 1,\n    \"name\": \"First Company\",\n    \"countryCode\": \"BRA\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/companies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Company - Fails, Bad Request (400)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Error response should have the correct title\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.title).to.eql(\"Validation Error\");",
+									"    pm.expect(jsonData).to.have.property('errors');",
+									"});",
+									"",
+									"pm.test(\"Validation should report 'Name' field is required\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.errors).to.have.property('Name');",
+									"    pm.expect(jsonData.errors.Name).to.include('The Name field is required.');",
+									"});",
+									"",
+									"pm.test(\"Validation should report 'CountryCode' field is required\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.errors).to.have.property('CountryCode');",
+									"    pm.expect(jsonData.errors.CountryCode).to.include('The CountryCode field is required.');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/companies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Company (Success 200)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Company code in response should match the one requested\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const requestedCode = pm.collectionVariables.get(\"createdCompanyCode\");",
+									"    pm.expect(jsonData.code).to.eql(requestedCode);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/companies/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Company - Fails, Not Found (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 404 Not Found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Error response should have the correct structure and title\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('title', 'Entity Not Found');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/companies/200",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"200"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Companies (Success 200)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/companies",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Company (Success 200)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 200 Ok\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Updated\",\n    \"countryCode\": \"UPD\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/companies/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Company - Fails, Not Found (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 404 Not Found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Error response should have the correct structure and title\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('title', 'Entity Not Found');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test\",\n    \"countryCode\": \"USA\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/companies/200",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"200"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Company - Fails, Bad Request (400)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Error response should have the correct structure and title\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('title', 'Validation Error');",
+									"});",
+									"",
+									"pm.test(\"Validation should report 'CountryCode' field is required\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.errors).to.have.property('CountryCode');",
+									"    pm.expect(jsonData.errors.CountryCode).to.include('The CountryCode field is required.');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"teste\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/companies/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Company - Fails, Not Found (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 404 Not Found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Error response should have the correct structure and title\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('title', 'Entity Not Found');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/companies/200",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"200"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Company - Fails, Conflict (409)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 409 Conflict\", function () {",
+									"    pm.response.to.have.status(409);",
+									"});",
+									"",
+									"pm.test(\"Error response should have the correct structure and title\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('title', 'Conflict In The Delete Operation');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/companies/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Company - Success (204)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 204 No Content\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Response body should be empty\", function () {",
+									"    pm.response.to.have.body(\"\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/companies/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stores",
+			"item": [
+				{
+					"name": "Create Store (Success 201)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 201 Created\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Response body should contain a 'code' property\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('code');",
+									"    ",
+									"    if (jsonData.code) {",
+									"        pm.collectionVariables.set(\"createdStoreCode\", jsonData.code);",
+									"        console.log(\"Saved store code: \" + jsonData.code);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": 1,\n    \"name\": \"First Store\",\n    \"address\": \"SP - Brazil\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/companies/1/stores",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Store - Fails, Conflict (409)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 409 Conflict\", function () {",
+									"    pm.response.to.have.status(409);",
+									"});",
+									"",
+									"pm.test(\"Error response should have the correct structure and title\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('title', 'Entity Already Exists');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": 1,\n    \"name\": \"First Store\",\n    \"address\": \"SP - Brazil\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/companies/1/stores",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Store - Fails, Not Found (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 404 Not Found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Error response should have the correct structure and title\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('title', 'Entity Not Found');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": 1,\n    \"name\": \"First Store\",\n    \"address\": \"SP - Brazil\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/companies/100/stores",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"100",
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Store - Fails, Bad Request (400)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Error response should have the correct title\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.title).to.eql(\"Validation Error\");",
+									"    pm.expect(jsonData).to.have.property('errors');",
+									"});",
+									"",
+									"pm.test(\"Validation should report 'Name' field is required\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.errors).to.have.property('Name');",
+									"    pm.expect(jsonData.errors.Name).to.include('The Name field is required.');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": 1,\n    \"address\": \"SP - Brazil\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/companies/1/stores",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Store (Success 200)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Company code in response should match the one requested\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const requestedCode = pm.collectionVariables.get(\"createdStoreCode\");",
+									"    pm.expect(jsonData.code).to.eql(requestedCode);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/companies/1/stores/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Store - Fails, Not Found (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 404 Not Found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Error response should have the correct structure and title\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('title', 'Entity Not Found');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/companies/1/stores/200",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores",
+								"200"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Stores (Success 200)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/companies/1/stores",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Store (Success 200)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 200 Ok\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"First Updated\",\n    \"address\": \"Updateeed\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/companies/1/stores/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Store - Fails, Not Found (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 404 Not Found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Error response should have the correct structure and title\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('title', 'Entity Not Found');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"First Updated\",\n    \"address\": \"Updateeed\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/companies/1/stores/200",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores",
+								"200"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Store - Fails, Bad Request (400)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Error response should have the correct structure and title\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('title', 'Validation Error');",
+									"});",
+									"",
+									"pm.test(\"Validation should report 'Address' field is required\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.errors).to.have.property('Address');",
+									"    pm.expect(jsonData.errors.Address).to.include('The Address field is required.');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"First Updated\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/companies/1/stores/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Store - Fails, Not Found (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 404 Not Found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Error response should have the correct structure and title\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('title', 'Entity Not Found');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/companies/1/stores/200",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores",
+								"200"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Store - Fails, Conflict (409)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 409 Conflict\", function () {",
+									"    pm.response.to.have.status(409);",
+									"});",
+									"",
+									"pm.test(\"Error response should have the correct structure and title\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('title', 'Conflict In The Delete Operation');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/companies/1/stores/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Store (Success 204)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 204 No Content\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Response body should be empty\", function () {",
+									"    pm.response.to.have.body(\"\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/companies/1/stores/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products (Azure Functions)",
+			"item": [
+				{
+					"name": "Create Product (Success 201)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 201 Created\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Response body should contain a 'code' property\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('code');",
+									"    ",
+									"    if (jsonData.code) {",
+									"        pm.collectionVariables.set(\"createdProductCode\", jsonData.code);",
+									"        console.log(\"Saved product code: \" + jsonData.code);",
+									"    }",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-functions-key",
+								"value": "43_iJdIJmwvWmQzJpnFepaoJUP7kKb1o9c0irq1OZBhUAzFuXkch-w==",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": 1,\n    \"name\": \"First Product\",\n    \"description\": \"Garrafeira 200 ML\",\n    \"price\": 5.99\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_functions}}/api/companies/1/stores/1/products",
+							"host": [
+								"{{base_url_functions}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores",
+								"1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product - Fails, Conflict (409)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 409 Conflict\", function () {",
+									"    pm.response.to.have.status(409);",
+									"});",
+									"",
+									"pm.test(\"Error response should have the correct structure and title\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('title', 'Entity Already Exists');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-functions-key",
+								"value": "43_iJdIJmwvWmQzJpnFepaoJUP7kKb1o9c0irq1OZBhUAzFuXkch-w==",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": 1,\n    \"name\": \"First Product\",\n    \"description\": \"Garrafeira 200 ML\",\n    \"price\": 5.99\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_functions}}/api/companies/1/stores/1/products",
+							"host": [
+								"{{base_url_functions}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores",
+								"1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product - Fails, Not Found (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 404 Not Found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Error response should have the correct structure and title\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('title', 'Entity Not Found');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-functions-key",
+								"value": "43_iJdIJmwvWmQzJpnFepaoJUP7kKb1o9c0irq1OZBhUAzFuXkch-w==",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": 1,\n    \"name\": \"test\",\n    \"description\": \"Garrafeira 200 ML\",\n    \"price\": 5.99\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_functions}}/api/companies/1/stores/200/products",
+							"host": [
+								"{{base_url_functions}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores",
+								"200",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product - Fails, Bad Request (400)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Error response should have the correct structure and title\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('title', 'Validation Error');",
+									"});",
+									"",
+									"pm.test(\"Validation should report 'name' field is required\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.errors).to.have.property('name');",
+									"    pm.expect(jsonData.errors.name).to.include('The Name field is required');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-functions-key",
+								"value": "43_iJdIJmwvWmQzJpnFepaoJUP7kKb1o9c0irq1OZBhUAzFuXkch-w==",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": 1,\n    \"description\": \"Garrafeira 200 ML\",\n    \"price\": 5.99\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_functions}}/api/companies/1/stores/1/products",
+							"host": [
+								"{{base_url_functions}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores",
+								"1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products (Success 200)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-functions-key",
+								"value": "43_iJdIJmwvWmQzJpnFepaoJUP7kKb1o9c0irq1OZBhUAzFuXkch-w==",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url_functions}}/api/companies/1/stores/1/products",
+							"host": [
+								"{{base_url_functions}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores",
+								"1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product (Success 200)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Company code in response should match the one requested\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    const requestedCode = pm.collectionVariables.get(\"createdProductCode\");",
+									"    pm.expect(jsonData.code).to.eql(requestedCode);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-functions-key",
+								"value": "43_iJdIJmwvWmQzJpnFepaoJUP7kKb1o9c0irq1OZBhUAzFuXkch-w==",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url_functions}}/api/companies/1/stores/1/products/1",
+							"host": [
+								"{{base_url_functions}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores",
+								"1",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product Fails, Not Found (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 404 Not Found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Error response should have the correct structure and title\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('title', 'Entity Not Found');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-functions-key",
+								"value": "43_iJdIJmwvWmQzJpnFepaoJUP7kKb1o9c0irq1OZBhUAzFuXkch-w==",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url_functions}}/api/companies/1/stores/1/products/200",
+							"host": [
+								"{{base_url_functions}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores",
+								"1",
+								"products",
+								"200"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product (Success 200)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 200 Ok\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-functions-key",
+								"value": "43_iJdIJmwvWmQzJpnFepaoJUP7kKb1o9c0irq1OZBhUAzFuXkch-w==",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"teste\",\n    \"description\": \"teste\",\n    \"price\": 0.15\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_functions}}/api/companies/1/stores/1/products/1",
+							"host": [
+								"{{base_url_functions}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores",
+								"1",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product - Fails, Not Found (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 404 Not Found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Error response should have the correct structure and title\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('title', 'Entity Not Found');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-functions-key",
+								"value": "43_iJdIJmwvWmQzJpnFepaoJUP7kKb1o9c0irq1OZBhUAzFuXkch-w==",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"teste\",\n    \"description\": \"teste\",\n    \"price\": 0.15\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_functions}}/api/companies/1/stores/1/products/200",
+							"host": [
+								"{{base_url_functions}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores",
+								"1",
+								"products",
+								"200"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product - Fails, Bad Request (400)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 400 Bad Request\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Error response should have the correct structure and title\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('title', 'Validation Error');",
+									"});",
+									"",
+									"pm.test(\"Validation should report 'description' field is required\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData.errors).to.have.property('description');",
+									"    pm.expect(jsonData.errors.description).to.include('The Description field is required');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-functions-key",
+								"value": "43_iJdIJmwvWmQzJpnFepaoJUP7kKb1o9c0irq1OZBhUAzFuXkch-w==",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"teste\",\n    \"price\": 0.15\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url_functions}}/api/companies/1/stores/1/products/1",
+							"host": [
+								"{{base_url_functions}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores",
+								"1",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product - Fails, Not Found (404)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 404 Not Found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Error response should have the correct structure and title\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('title', 'Entity Not Found');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-functions-key",
+								"value": "43_iJdIJmwvWmQzJpnFepaoJUP7kKb1o9c0irq1OZBhUAzFuXkch-w==",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url_functions}}/api/companies/1/stores/1/products/200",
+							"host": [
+								"{{base_url_functions}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores",
+								"1",
+								"products",
+								"200"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product - Success (204)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 204 No Content\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"pm.test(\"Response body should be empty\", function () {",
+									"    pm.response.to.have.body(\"\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-functions-key",
+								"value": "43_iJdIJmwvWmQzJpnFepaoJUP7kKb1o9c0irq1OZBhUAzFuXkch-w==",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url_functions}}/api/companies/1/stores/1/products/1",
+							"host": [
+								"{{base_url_functions}}"
+							],
+							"path": [
+								"api",
+								"companies",
+								"1",
+								"stores",
+								"1",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "createdProductCode",
+			"value": ""
+		}
+	]
+}
