@@ -67,6 +67,6 @@ jobs:
         run: |
           az webapp deployment slot swap \
             --name ${{ env.AZURE_WEBAPP_NAME }} \
-            --resource-group <SEU_RESOURCE_GROUP> \
+            --resource-group ${{ env.AZURE_RESOURCE_GROUP }} \
             --slot ${{ env.AZURE_WEBAPP_SLOT }} \
             --target-slot production
