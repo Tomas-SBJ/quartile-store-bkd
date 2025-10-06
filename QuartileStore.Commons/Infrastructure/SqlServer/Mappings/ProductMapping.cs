@@ -15,8 +15,9 @@ public class ProductMapping : IEntityTypeConfiguration<Product>
         builder.Property(x => x.Id).HasColumnName("id").IsRequired();
         builder.Property(x => x.Code).HasColumnName("code").IsRequired();
         builder.Property(x => x.Name).HasColumnName("name").IsRequired();
-        builder.Property(x => x.Description).HasColumnName("descriptions").IsRequired();
-        builder.Property(x => x.Price).HasColumnName("price").IsRequired();
+        builder.Property(x => x.Description).HasColumnName("description").IsRequired();
+        builder.Property(x => x.Price).HasColumnName("price").IsRequired().HasPrecision(18, 2);
+        builder.Property(x => x.StoreId).HasColumnName("store_id").IsRequired();
         
         builder
             .HasOne(product => product.Store)

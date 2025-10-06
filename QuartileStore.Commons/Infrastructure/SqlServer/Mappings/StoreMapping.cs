@@ -16,6 +16,7 @@ public class StoreMapping : IEntityTypeConfiguration<Store>
         builder.Property(x => x.Code).HasColumnName("code").IsRequired();
         builder.Property(x => x.Name).HasColumnName("name").IsRequired();
         builder.Property(x => x.Address).HasColumnName("address").IsRequired();
+        builder.Property(x => x.CompanyId).HasColumnName("company_id").IsRequired();
         
         builder
             .HasOne(store => store.Company)

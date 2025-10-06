@@ -48,8 +48,6 @@ public static class DependencyInjection
     {
         var connectionString = configuration.GetConnectionString("SqlDb");
 
-        Console.WriteLine("DB: " + new SqlConnectionStringBuilder(connectionString));
-
         services.AddDbContext<QuartileDatabaseContext>(options =>
             options.UseSqlServer(connectionString, sqlServerDbContextOptionsBuilder =>
             {

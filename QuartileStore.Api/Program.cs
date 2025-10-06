@@ -8,9 +8,6 @@ using QuartileStore.Commons.Infrastructure.SqlServer.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Logging.AddFilter("Microsoft.AspNetCore.Routing", LogLevel.Debug);
-builder.Logging.AddFilter("Microsoft.AspNetCore.Hosting", LogLevel.Information);
-
 builder.Services
     .AddApi(builder.Configuration)
     .AddControllers()
@@ -21,7 +18,7 @@ builder.Services
             var validationErrors = context.ModelState
                 .Where(e => e.Value!.Errors.Count > 0)
                 .ToDictionary(
-                    x => x.Key, 
+                    x => x.Key,
                     x => x.Value!.Errors.Select(e => e.ErrorMessage).ToArray());
 
             var errorResponse = new ApiErrorResponse
@@ -31,7 +28,7 @@ builder.Services
                 Detail = "The request failed due to one or more validation errors",
                 Errors = validationErrors
             };
-            
+
             return new BadRequestObjectResult(errorResponse);
         };
     });
