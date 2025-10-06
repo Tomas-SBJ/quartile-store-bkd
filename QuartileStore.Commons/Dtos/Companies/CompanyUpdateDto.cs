@@ -1,8 +1,7 @@
 namespace QuartileStore.Commons.Dtos.Companies;
 
-public class CompanyDto
+public class CompanyUpdateDto
 {
-    public int Code { get; set; }
     public string Name { get; set; }
     public string CountryCode { get; set; }
 }

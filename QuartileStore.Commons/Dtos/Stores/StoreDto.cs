@@ -1,3 +1,9 @@
 namespace QuartileStore.Commons.Dtos.Stores;
 
-public record StoreDto(int Code, int CompanyCode, string Name, string Address);
+public record StoreDto
+{
+    public int Code { get; set; }
+    public int CompanyCode { get; set; }
+    public string Name { get; set; }
+    public string Address { get; set; }
+}

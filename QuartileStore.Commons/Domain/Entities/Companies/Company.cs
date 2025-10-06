@@ -9,7 +9,7 @@ public class Company : BaseEntity
     public string Name { get; set; }
     public string CountryCode { get; set; }
 
-    public virtual List<Store> Stores { get; set; } = [];
+    public virtual ICollection<Store> Stores { get; set; } = [];
 
     public void Update(string name, string countryCode)
     {

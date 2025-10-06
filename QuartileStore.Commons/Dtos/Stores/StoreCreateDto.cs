@@ -1,6 +1,6 @@
 namespace QuartileStore.Commons.Dtos.Stores;
 
-public class CreateStoreDto
+public class StoreCreateDto
 {
     public int Code { get; set; }
     public string Name { get; set; }

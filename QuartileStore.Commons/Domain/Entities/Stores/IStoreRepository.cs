@@ -6,5 +6,5 @@ namespace QuartileStore.Commons.Domain.Entities.Stores;
 public interface IStoreRepository : IBaseRepository<Store>
 {
     Task<List<Store>> SelectAllByCompanyCodeAsync(int companyCode);
-    Task<Store?> SelectOneWithCompanyAsync(Expression<Func<Store, bool>> predicate);
+    Task<Store?> SelectOneWithCompanyAsync(int storeCode, int companyCode);
 }

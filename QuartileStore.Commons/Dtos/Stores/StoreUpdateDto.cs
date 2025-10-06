@@ -1,6 +1,6 @@
 namespace QuartileStore.Commons.Dtos.Stores;
 
-public class UpdateStoreDto
+public class StoreUpdateDto
 {
     public string Name { get; set; }
     public string Address { get; set; }

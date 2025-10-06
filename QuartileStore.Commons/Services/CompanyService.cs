@@ -11,24 +11,29 @@ internal class CompanyService(
     IUnitOfWork unitOfWork
 ) : ICompanyService
 {
-    public async Task<CompanyDto> CreateAsync(CreateCompanyDto createCompanyDto)
+    public async Task<CompanyDto> CreateAsync(CompanyCreateDto companyCreateDto)
     {
-        var companyAlreadyExists = await companyRepository.Exists(x => x.Code == createCompanyDto.Code);
+        var companyAlreadyExists = await companyRepository.Exists(x => x.Code == companyCreateDto.Code);
 
         if (companyAlreadyExists)
-            throw new EntityAlreadyExistsException($"Company with code: {createCompanyDto.Code} already exists");
+            throw new EntityAlreadyExistsException($"Company with code: {companyCreateDto.Code} already exists");
 
         var company = new Company
         {
-            Code = createCompanyDto.Code,
-            Name = createCompanyDto.Name,
-            CountryCode = createCompanyDto.CountryCode
+            Code = companyCreateDto.Code,
+            Name = companyCreateDto.Name,
+            CountryCode = companyCreateDto.CountryCode
         };
 
         await companyRepository.CreateAsync(company);
         await unitOfWork.Commit();
 
-        return new CompanyDto(company.Code, company.Name, company.CountryCode);
+        return new CompanyDto
+        {
+            Code = company.Code,
+            Name = company.Name,
+            CountryCode = company.CountryCode
+        };
     }
 
     public async Task<CompanyDto> GetAsync(int code)
@@ -38,26 +43,41 @@ internal class CompanyService(
         if (company is null)
             throw new EntityNotFoundException($"Company with code: {code} was not found");
 
-        return new CompanyDto(company.Code, company.Name, company.CountryCode);
+        return new CompanyDto
+        {
+            Code = company.Code,
+            Name = company.Name,
+            CountryCode = company.CountryCode
+        };
     }
 
-    public async Task<List<CompanyDto>> GetAllAsync()
+    public async Task<IEnumerable<CompanyDto>> GetAllAsync()
     {
         var companies = await companyRepository.SelectAllAsync();
-        return companies.Select(x => new CompanyDto(x.Code, x.Name, x.CountryCode)).OrderBy(x => x.Code).ToList();
+        return companies.Select(x => new CompanyDto
+        {
+            Code = x.Code,
+            Name = x.Name,
+            CountryCode = x.CountryCode
+        }).OrderBy(x => x.Code);
     }
 
-    public async Task<CompanyDto> UpdateAsync(int code, UpdateCompanyDto updateCompanyDto)
+    public async Task<CompanyDto> UpdateAsync(int code, CompanyUpdateDto companyUpdateDto)
     {
         var company = await companyRepository.SelectOneByAsync(x => x.Code == code);
         
         if (company is null)
             throw new EntityNotFoundException($"Company with code: {code} was not found");
         
-        company.Update(updateCompanyDto.Name, updateCompanyDto.CountryCode);
+        company.Update(companyUpdateDto.Name, companyUpdateDto.CountryCode);
         await unitOfWork.Commit();
         
-        return new CompanyDto(code, company.Name, company.CountryCode);
+        return new CompanyDto
+        {
+            Code = company.Code,
+            Name = company.Name,
+            CountryCode = company.CountryCode
+        };
     }
 
     public async Task DeleteAsync(int code)

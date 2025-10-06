@@ -23,6 +23,12 @@ public class StoreMapping : IEntityTypeConfiguration<Store>
             .HasForeignKey(store => store.CompanyId)
             .OnDelete(DeleteBehavior.Restrict);
         
+        builder
+            .HasMany(store => store.Products)
+            .WithOne(product => product.Store)
+            .HasForeignKey(product => product.StoreId)
+            .OnDelete(DeleteBehavior.Restrict);
+            
         builder.HasIndex(store => new { store.Code, store.CompanyId }).IsUnique();
     }
 }

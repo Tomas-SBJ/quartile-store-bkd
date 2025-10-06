@@ -15,6 +15,8 @@ internal class StoreRepository(
             .Where(x => x.Company.Code == companyCode)
             .ToListAsync();
 
-    public async Task<Store?> SelectOneWithCompanyAsync(Expression<Func<Store, bool>> predicate) =>
-        await Entity.Include(x => x.Company).FirstOrDefaultAsync(predicate);
+    public async Task<Store?> SelectOneWithCompanyAsync(int storeCode, int companyCode) =>
+        await Entity
+            .Include(x => x.Company)
+            .FirstOrDefaultAsync(x => x.Code == storeCode && x.Company.Code == companyCode);
 }

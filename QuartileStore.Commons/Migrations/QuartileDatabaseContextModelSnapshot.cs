@@ -52,6 +52,44 @@ namespace QuartileStore.Commons.Migrations
                     b.ToTable("companies", "quartile");
                 });
 
+            modelBuilder.Entity("QuartileStore.Commons.Domain.Entities.Products.Product", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id");
+
+                    b.Property<int>("Code")
+                        .HasColumnType("int")
+                        .HasColumnName("code");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("descriptions");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("name");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("price");
+
+                    b.Property<Guid>("StoreId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StoreId");
+
+                    b.HasIndex("Code", "StoreId")
+                        .IsUnique();
+
+                    b.ToTable("products", "quartile");
+                });
+
             modelBuilder.Entity("QuartileStore.Commons.Domain.Entities.Stores.Store", b =>
                 {
                     b.Property<Guid>("Id")
@@ -86,6 +124,17 @@ namespace QuartileStore.Commons.Migrations
                     b.ToTable("stores", "quartile");
                 });
 
+            modelBuilder.Entity("QuartileStore.Commons.Domain.Entities.Products.Product", b =>
+                {
+                    b.HasOne("QuartileStore.Commons.Domain.Entities.Stores.Store", "Store")
+                        .WithMany("Products")
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Store");
+                });
+
             modelBuilder.Entity("QuartileStore.Commons.Domain.Entities.Stores.Store", b =>
                 {
                     b.HasOne("QuartileStore.Commons.Domain.Entities.Companies.Company", "Company")
@@ -100,6 +149,11 @@ namespace QuartileStore.Commons.Migrations
             modelBuilder.Entity("QuartileStore.Commons.Domain.Entities.Companies.Company", b =>
                 {
                     b.Navigation("Stores");
+                });
+
+            modelBuilder.Entity("QuartileStore.Commons.Domain.Entities.Stores.Store", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

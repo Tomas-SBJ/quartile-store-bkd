@@ -17,7 +17,7 @@ public class CompanyController(
     /// <summary>
     /// Create a new Company
     /// </summary>
-    /// <param name="createCompanyDto">The data for the new company</param>
+    /// <param name="companyCreateDto">The data for the new company</param>
     /// <returns>The newly created company</returns>
     /// <response code="201">Returns the newly created company and its location in the Location header</response>
     /// <response code="400">If the request payload is invalid</response>
@@ -26,9 +26,9 @@ public class CompanyController(
     [ProducesResponseType(typeof(CompanyDto), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status409Conflict)]
-    public async Task<IActionResult> Create([FromBody] CreateCompanyDto createCompanyDto)
+    public async Task<IActionResult> Create([FromBody] CompanyCreateDto companyCreateDto)
     {
-        var newCompany = await companyService.CreateAsync(createCompanyDto);
+        var newCompany = await companyService.CreateAsync(companyCreateDto);
 
         return CreatedAtAction(
             nameof(GetCompany),
@@ -67,7 +67,7 @@ public class CompanyController(
     /// Updates an existing company.
     /// </summary>
     /// <param name="code">The business code of the company to update.</param>
-    /// <param name="updateCompanyDto">The updated data for the company.</param>
+    /// <param name="companyUpdateDto">The updated data for the company.</param>
     /// <returns>The updated company.</returns>
     /// <response code="200">Returns the updated company.</response>
     /// <response code="400">If the request payload is invalid.</response>
@@ -76,9 +76,9 @@ public class CompanyController(
     [ProducesResponseType(typeof(CompanyDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Update(int code, [FromBody] UpdateCompanyDto updateCompanyDto)
+    public async Task<IActionResult> Update(int code, [FromBody] CompanyUpdateDto companyUpdateDto)
     {
-        return Ok(await companyService.UpdateAsync(code, updateCompanyDto));
+        return Ok(await companyService.UpdateAsync(code, companyUpdateDto));
     }
 
     /// <summary>

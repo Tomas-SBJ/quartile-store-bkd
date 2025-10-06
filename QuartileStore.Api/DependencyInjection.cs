@@ -5,10 +5,12 @@ namespace QuartileStore.Api;
 
 public static class DependencyInjection
 {
-    public static void AddApi(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddApi(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddCommons(configuration);
         services.AddSwagger();
+
+        return services;
     }
 
     private static void AddSwagger(this IServiceCollection services)

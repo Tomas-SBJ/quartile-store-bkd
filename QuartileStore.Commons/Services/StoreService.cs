@@ -13,7 +13,7 @@ internal class StoreService(
     IUnitOfWork unitOfWork
 ) : IStoreService
 {
-    public async Task<StoreDto> CreateAsync(int companyCode, CreateStoreDto storeDto)
+    public async Task<StoreDto> CreateAsync(int companyCode, StoreCreateDto dto)
     {
         var company = await companyRepository.SelectOneByAsync(x => x.Code == companyCode);
 
@@ -21,17 +21,17 @@ internal class StoreService(
             throw new EntityNotFoundException($"Company with code: {companyCode} was not found");
 
         var storeAlreadyExists = await storeRepository.Exists(x =>
-            x.Code == storeDto.Code &&
+            x.Code == dto.Code &&
             x.CompanyId == company.Id);
 
         if (storeAlreadyExists)
-            throw new EntityAlreadyExistsException($"Store with code {storeDto.Code} already exists");
+            throw new EntityAlreadyExistsException($"Store with code {dto.Code} already exists");
 
         var store = new Store
         {
-            Code = storeDto.Code,
-            Name = storeDto.Name,
-            Address = storeDto.Address,
+            Code = dto.Code,
+            Name = dto.Name,
+            Address = dto.Address,
             CompanyId = company.Id,
             Company = company
         };
@@ -39,20 +39,32 @@ internal class StoreService(
         await storeRepository.CreateAsync(store);
         await unitOfWork.Commit();
 
-        return new StoreDto(store.Code, store.Company.Code, store.Name, store.Address);
+        return new StoreDto
+        {
+            Code = store.Code,
+            CompanyCode = store.Company.Code,
+            Name = store.Name,
+            Address = store.Address
+        };
     }
 
-    public async Task<StoreDto> UpdateAsync(int code, int companyCode, UpdateStoreDto storeDto)
+    public async Task<StoreDto> UpdateAsync(int code, int companyCode, StoreUpdateDto dto)
     {
-        var store = await storeRepository.SelectOneWithCompanyAsync(x => x.Code == code && x.Company.Code == companyCode);
+        var store = await storeRepository.SelectOneWithCompanyAsync(code, companyCode);
 
         if (store is null)
             throw new EntityNotFoundException($"Store with code: {code} was not found");
 
-        store.Update(storeDto.Name, storeDto.Address);
+        store.Update(dto.Name, dto.Address);
         await unitOfWork.Commit();
 
-        return new StoreDto(store.Code, store.Company.Code, store.Name, store.Address);
+        return new StoreDto
+        {
+            Code = store.Code,
+            CompanyCode = store.Company.Code,
+            Name = store.Name,
+            Address = store.Address
+        };
     }
 
     public async Task DeleteAsync(int code, int companyCode)
@@ -68,17 +80,29 @@ internal class StoreService(
 
     public async Task<StoreDto> GetAsync(int code, int companyCode)
     {
-        var store = await storeRepository.SelectOneWithCompanyAsync(x => x.Code == code && x.Company.Code == companyCode);
+        var store = await storeRepository.SelectOneWithCompanyAsync(code, companyCode);
 
         if (store is null)
             throw new EntityNotFoundException($"Store with code: {code} was not found");
 
-        return new StoreDto(store.Code, store.Company.Code, store.Name, store.Address);
+        return new StoreDto
+        {
+            Code = store.Code,
+            CompanyCode = store.Company.Code,
+            Name = store.Name,
+            Address = store.Address
+        };
     }
 
-    public async Task<List<StoreDto>> GetAllAsync(int companyCode)
+    public async Task<IEnumerable<StoreDto>> GetAllAsync(int companyCode)
     {
         var stores = await storeRepository.SelectAllByCompanyCodeAsync(companyCode);
-        return stores.Select(x => new StoreDto(x.Code, x.Company.Code, x.Name, x.Address)).OrderBy(x => x.Code).ToList();
+        return stores.Select(x => new StoreDto
+        {
+            Code = x.Code,
+            CompanyCode = x.Company.Code,
+            Name = x.Name,
+            Address = x.Address
+        }).OrderBy(x => x.Code);
     }
 }

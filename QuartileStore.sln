@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuartileStore.Commons", "Qu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuartileStore.Api", "QuartileStore.Api\QuartileStore.Api.csproj", "{8DBF7BC4-FAF8-4910-A844-D60B57CCC6B5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuartileStore.Products.Functions", "QuartileStore.Products.Functions\QuartileStore.Products.Functions.csproj", "{27767179-4F61-4D95-8A48-56C4E24B70A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{8DBF7BC4-FAF8-4910-A844-D60B57CCC6B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DBF7BC4-FAF8-4910-A844-D60B57CCC6B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DBF7BC4-FAF8-4910-A844-D60B57CCC6B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27767179-4F61-4D95-8A48-56C4E24B70A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27767179-4F61-4D95-8A48-56C4E24B70A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27767179-4F61-4D95-8A48-56C4E24B70A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27767179-4F61-4D95-8A48-56C4E24B70A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

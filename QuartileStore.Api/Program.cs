@@ -6,9 +6,9 @@ using QuartileStore.Commons.Dtos.Errors;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddApi(builder.Configuration);
-
-builder.Services.AddControllers()
+builder.Services
+    .AddApi(builder.Configuration)
+    .AddControllers()
     .ConfigureApiBehaviorOptions(options =>
     {
         options.InvalidModelStateResponseFactory = context =>

@@ -16,7 +16,7 @@ public class StoreController(IStoreService storeService) : ControllerBase
     /// Creates a new store for a specific company.
     /// </summary>
     /// <param name="companyCode">The business code of the parent company.</param>
-    /// <param name="createStoreDto">The data for the new store.</param>
+    /// <param name="storeCreateDto">The data for the new store.</param>
     /// <returns>The newly created store.</returns>
     /// <response code="201">Returns the newly created store.</response>
     /// <response code="400">If the request payload is invalid.</response>
@@ -27,9 +27,9 @@ public class StoreController(IStoreService storeService) : ControllerBase
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status409Conflict)]
-    public async Task<IActionResult> Create(int companyCode, [FromBody] CreateStoreDto createStoreDto)
+    public async Task<IActionResult> Create(int companyCode, [FromBody] StoreCreateDto storeCreateDto)
     {
-        var newStore = await storeService.CreateAsync(companyCode, createStoreDto);
+        var newStore = await storeService.CreateAsync(companyCode, storeCreateDto);
 
         return CreatedAtAction(
             nameof(GetStore),
@@ -71,7 +71,7 @@ public class StoreController(IStoreService storeService) : ControllerBase
     /// </summary>
     /// <param name="code">The business code of the store to update.</param>
     /// <param name="companyCode">The business code of the parent company.</param>
-    /// <param name="updateStoreDto">The updated data for the store.</param>
+    /// <param name="storeUpdateDto">The updated data for the store.</param>
     /// <returns>The updated store.</returns>
     /// <response code="200">Returns the updated store.</response>
     /// <response code="400">If the request payload is invalid.</response>
@@ -80,9 +80,9 @@ public class StoreController(IStoreService storeService) : ControllerBase
     [ProducesResponseType(typeof(StoreDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Update(int code, int companyCode, [FromBody] UpdateStoreDto updateStoreDto)
+    public async Task<IActionResult> Update(int code, int companyCode, [FromBody] StoreUpdateDto storeUpdateDto)
     {
-        return Ok(await storeService.UpdateAsync(code, companyCode, updateStoreDto));
+        return Ok(await storeService.UpdateAsync(code, companyCode, storeUpdateDto));
     }
 
     /// <summary>
