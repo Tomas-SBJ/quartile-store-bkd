@@ -45,7 +45,7 @@ public static class DependencyInjection
 
     private static void AddSqlServer(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        var connectionString = configuration.GetConnectionString("SqlDb");
 
         services.AddDbContext<QuartileDatabaseContext>(options =>
             options.UseSqlServer(connectionString));

@@ -47,9 +47,21 @@ jobs:
           slot-name: ${{ env.AZURE_WEBAPP_SLOT }}
           package: ${{ env.PACKAGE_PATH }}
 
-      - name: Health check staging
+      - name: Get staging hostname
+        id: host
         run: |
-          curl -f https://${{ env.AZURE_WEBAPP_NAME }}-staging.azurewebsites.net/health || exit 1
+          echo "HOST=$(az webapp show -g rg_quartilestore -n quartilestore --slot staging --query defaultHostName -o tsv)" >> $GITHUB_OUTPUT
+
+      - name: Health check (staging) with retries
+        run: |
+          for i in {1..15}; do
+            echo "Attempt $i: https://${{ steps.host.outputs.HOST }}/health"
+            if curl -fsS https://${{ steps.host.outputs.HOST }}/health; then
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Health check failed"; exit 1
 
       - name: Swap Staging -> Production
         run: |
