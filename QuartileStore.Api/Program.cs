@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using QuartileStore.Api;
 using QuartileStore.Api.Middleware;
 using QuartileStore.Commons.Application.Dtos.Errors;
 using QuartileStore.Commons.Domain.Constants;
+using QuartileStore.Commons.Infrastructure.SqlServer.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +39,12 @@ builder.Services
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionHandlerMiddleware>();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<QuartileDatabaseContext>();
+    dbContext.Database.Migrate();
+}
 
 if (app.Environment.IsDevelopment())
 {
