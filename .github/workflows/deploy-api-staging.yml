@@ -1,0 +1,54 @@
+name: Build and Deploy API to Staging
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build_and_deploy_api_staging:
+    runs-on: ubuntu-latest
+    
+    env:
+      DOTNET_VERSION: '9.0.x'
+      AZURE_WEBAPP_NAME: ${{ secrets.AZURE_WEBAPP_NAME }}
+      AZURE_WEBAPP_SLOT: 'staging'
+      AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - run: dotnet restore
+      - run: dotnet build --configuration Release --no-restore
+      - run: dotnet test --configuration Release --no-build
+
+      - name: Clean and Publish Web API
+        run: |
+          rm -rf ./publish
+          dotnet publish ./QuartileStore.Api/QuartileStore.Api.csproj -c Release -o ./publish
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy API to Staging slot
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          slot-name: ${{ env.AZURE_WEBAPP_SLOT }}
+          package: ./publish
+          clean: true
+
+      - name: Get staging hostname
+        id: host
+        run: echo "HOST=$(az webapp show -g ${{ env.AZURE_RESOURCE_GROUP }} -n ${{ env.AZURE_WEBAPP_NAME }} --slot staging --query defaultHostName -o tsv)" >> $GITHUB_OUTPUT
+
+      - name: Health check (staging)
+        run: curl -fsS https://${{ steps.host.outputs.HOST }}/health

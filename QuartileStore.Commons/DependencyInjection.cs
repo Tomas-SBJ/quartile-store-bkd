@@ -51,7 +51,10 @@ public static class DependencyInjection
         Console.WriteLine("DB: " + new SqlConnectionStringBuilder(connectionString));
 
         services.AddDbContext<QuartileDatabaseContext>(options =>
-            options.UseSqlServer(connectionString));
+            options.UseSqlServer(connectionString, sqlServerDbContextOptionsBuilder =>
+            {
+                sqlServerDbContextOptionsBuilder.EnableRetryOnFailure();
+            }));
 
         services.AddScoped<IScopedDatabaseContext, ScopedDatabaseContext>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
