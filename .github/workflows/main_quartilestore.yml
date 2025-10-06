@@ -39,7 +39,7 @@ jobs:
         run: dotnet publish ./QuartileStore.Api/QuartileStore.Api.csproj -c Release -o ./publish
 
       - name: Upload artifact for inspection
-          uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4
           with:
             name: api-publish-package
             path: ./publish
