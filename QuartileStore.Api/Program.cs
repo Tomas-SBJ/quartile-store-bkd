@@ -6,6 +6,9 @@ using QuartileStore.Commons.Domain.Constants;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.AddFilter("Microsoft.AspNetCore.Routing", LogLevel.Debug);
+builder.Logging.AddFilter("Microsoft.AspNetCore.Hosting", LogLevel.Information);
+
 builder.Services
     .AddApi(builder.Configuration)
     .AddControllers()
