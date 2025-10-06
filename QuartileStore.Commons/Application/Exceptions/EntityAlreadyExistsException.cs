@@ -1,6 +1,6 @@
 using QuartileStore.Commons.Domain.Constants;
 
-namespace QuartileStore.Commons.Exceptions;
+namespace QuartileStore.Commons.Application.Exceptions;
 
 public class EntityAlreadyExistsException(string message) : Exception(message)
 {

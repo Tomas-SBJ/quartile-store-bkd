@@ -1,6 +1,6 @@
-using QuartileStore.Commons.Dtos.Products;
+using QuartileStore.Commons.Application.Dtos.Products;
 
-namespace QuartileStore.Commons.Services.Contracts;
+namespace QuartileStore.Commons.Application.Services.Contracts;
 
 public interface IProductService
 {

@@ -1,4 +1,4 @@
-namespace QuartileStore.Commons.Dtos.Stores;
+namespace QuartileStore.Commons.Application.Dtos.Stores;
 
 public class StoreUpdateDto
 {

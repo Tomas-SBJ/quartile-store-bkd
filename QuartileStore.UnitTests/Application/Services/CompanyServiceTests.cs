@@ -1,11 +1,11 @@
 using Moq;
+using QuartileStore.Commons.Application.Dtos.Companies;
+using QuartileStore.Commons.Application.Exceptions;
+using QuartileStore.Commons.Application.Services;
 using QuartileStore.Commons.Domain.Entities.Companies;
-using QuartileStore.Commons.Dtos.Companies;
-using QuartileStore.Commons.Exceptions;
 using QuartileStore.Commons.Infrastructure.Transactions;
-using QuartileStore.Commons.Services;
 
-namespace QuartileStore.UnitTests.Services;
+namespace QuartileStore.UnitTests.Application.Services;
 
 public class CompanyServiceTests
 {
@@ -32,18 +32,18 @@ public class CompanyServiceTests
             Name = "Name",
             CountryCode = "USA"
         };
-        
+
         _companyRepositoryMock
             .Setup(r => r.Exists(x => x.Code == companyCreateDto.Code))
             .ReturnsAsync(false);
-        
+
         var result = await _companyService.CreateAsync(companyCreateDto);
-        
+
         Assert.NotNull(result);
         Assert.Equal(companyCreateDto.Code, result.Code);
         Assert.Equal(companyCreateDto.Name, result.Name);
     }
-    
+
     [Fact]
     public async Task CreateAsync_WhenCompanyAlreadyExists_ShouldThrowEntityAlreadyExistsException()
     {
@@ -59,13 +59,13 @@ public class CompanyServiceTests
             .ReturnsAsync(true);
 
         var act = () => _companyService.CreateAsync(companyCreateDto);
-        
+
         await Assert.ThrowsAsync<EntityAlreadyExistsException>(act);
-        
+
         _companyRepositoryMock.Verify(r => r.CreateAsync(It.IsAny<Company>()), Times.Never);
         _unitOfWorkMock.Verify(r => r.Commit(), Times.Never);
     }
-    
+
     [Fact]
     public async Task GetAsync_WhenCompanyExists_ReturnsCompanyDto()
     {
@@ -97,9 +97,9 @@ public class CompanyServiceTests
         _companyRepositoryMock
             .Setup(r => r.SelectOneByAsync(x => x.Code == companyCode))
             .ReturnsAsync(null as Company);
-        
+
         var act = () => _companyService.GetAsync(companyCode);
-        
+
         await Assert.ThrowsAsync<EntityNotFoundException>(act);
     }
 

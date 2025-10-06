@@ -1,4 +1,4 @@
-namespace QuartileStore.Commons.Dtos.Companies;
+namespace QuartileStore.Commons.Application.Dtos.Companies;
 
 public class CompanyDto
 {

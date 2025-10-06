@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace QuartileStore.Commons.Dtos.Products;
+namespace QuartileStore.Commons.Application.Dtos.Products;
 
 public class ProductUpdateDto
 {

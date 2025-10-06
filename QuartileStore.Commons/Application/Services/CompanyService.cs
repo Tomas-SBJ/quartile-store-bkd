@@ -1,10 +1,10 @@
+using QuartileStore.Commons.Application.Dtos.Companies;
+using QuartileStore.Commons.Application.Exceptions;
+using QuartileStore.Commons.Application.Services.Contracts;
 using QuartileStore.Commons.Domain.Entities.Companies;
-using QuartileStore.Commons.Dtos.Companies;
-using QuartileStore.Commons.Exceptions;
 using QuartileStore.Commons.Infrastructure.Transactions;
-using QuartileStore.Commons.Services.Contracts;
 
-namespace QuartileStore.Commons.Services;
+namespace QuartileStore.Commons.Application.Services;
 
 internal class CompanyService(
     ICompanyRepository companyRepository,

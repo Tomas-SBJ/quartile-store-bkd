@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using QuartileStore.Api;
 using QuartileStore.Api.Middleware;
+using QuartileStore.Commons.Application.Dtos.Errors;
 using QuartileStore.Commons.Domain.Constants;
-using QuartileStore.Commons.Dtos.Errors;
 
 var builder = WebApplication.CreateBuilder(args);
 

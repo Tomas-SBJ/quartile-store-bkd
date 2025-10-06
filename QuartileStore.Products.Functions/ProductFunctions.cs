@@ -2,8 +2,8 @@ using System.Net;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
-using QuartileStore.Commons.Dtos.Products;
-using QuartileStore.Commons.Services.Contracts;
+using QuartileStore.Commons.Application.Dtos.Products;
+using QuartileStore.Commons.Application.Services.Contracts;
 using QuartileStore.Products.Functions.Extensions;
 
 namespace QuartileStore.Products.Functions;

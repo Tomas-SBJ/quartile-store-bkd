@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using Microsoft.Azure.Functions.Worker.Http;
+using QuartileStore.Commons.Application.Dtos.Errors;
 using QuartileStore.Commons.Domain.Constants;
-using QuartileStore.Commons.Dtos.Errors;
 
 namespace QuartileStore.Products.Functions.Extensions;
 

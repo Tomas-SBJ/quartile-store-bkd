@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using QuartileStore.Commons.Dtos.Errors;
-using QuartileStore.Commons.Exceptions;
+using QuartileStore.Commons.Application.Dtos.Errors;
+using QuartileStore.Commons.Application.Exceptions;
 
 namespace QuartileStore.Api.Middleware;
 

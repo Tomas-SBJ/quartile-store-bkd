@@ -1,4 +1,4 @@
-namespace QuartileStore.Commons.Dtos.Errors;
+namespace QuartileStore.Commons.Application.Dtos.Errors;
 
 public class ApiErrorResponse
 {

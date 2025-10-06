@@ -1,6 +1,6 @@
-using QuartileStore.Commons.Dtos.Stores;
+using QuartileStore.Commons.Application.Dtos.Stores;
 
-namespace QuartileStore.Commons.Services.Contracts;
+namespace QuartileStore.Commons.Application.Services.Contracts;
 
 public interface IStoreService
 {

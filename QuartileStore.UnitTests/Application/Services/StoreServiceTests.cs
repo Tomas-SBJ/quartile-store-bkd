@@ -1,12 +1,12 @@
 using Moq;
+using QuartileStore.Commons.Application.Dtos.Stores;
+using QuartileStore.Commons.Application.Exceptions;
+using QuartileStore.Commons.Application.Services;
 using QuartileStore.Commons.Domain.Entities.Companies;
 using QuartileStore.Commons.Domain.Entities.Stores;
-using QuartileStore.Commons.Dtos.Stores;
-using QuartileStore.Commons.Exceptions;
 using QuartileStore.Commons.Infrastructure.Transactions;
-using QuartileStore.Commons.Services;
 
-namespace QuartileStore.UnitTests.Services;
+namespace QuartileStore.UnitTests.Application.Services;
 
 public class StoreServiceTests
 {
@@ -59,6 +59,8 @@ public class StoreServiceTests
         Assert.NotNull(result);
         Assert.Equal(storeCreateDto.Code, result.Code);
         Assert.Equal(storeCreateDto.Name, result.Name);
+        
+        _unitOfWorkMock.Verify(r => r.Commit(), Times.Once);
     }
 
     [Fact]
@@ -81,7 +83,7 @@ public class StoreServiceTests
 
         await Assert.ThrowsAsync<EntityNotFoundException>(act);
 
-        _companyRepositoryMock.Verify(r => r.CreateAsync(It.IsAny<Company>()), Times.Never);
+        _storeRepositoryMock.Verify(r => r.CreateAsync(It.IsAny<Store>()), Times.Never);
         _unitOfWorkMock.Verify(r => r.Commit(), Times.Never);
     }
 
@@ -116,7 +118,7 @@ public class StoreServiceTests
 
         await Assert.ThrowsAsync<EntityAlreadyExistsException>(act);
 
-        _companyRepositoryMock.Verify(r => r.CreateAsync(It.IsAny<Company>()), Times.Never);
+        _storeRepositoryMock.Verify(r => r.CreateAsync(It.IsAny<Store>()), Times.Never);
         _unitOfWorkMock.Verify(r => r.Commit(), Times.Never);
     }
 

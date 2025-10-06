@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using QuartileStore.Commons.Application.Services;
+using QuartileStore.Commons.Application.Services.Contracts;
 using QuartileStore.Commons.Domain.Entities.Abstracts;
 using QuartileStore.Commons.Domain.Entities.Companies;
 using QuartileStore.Commons.Domain.Entities.Products;
@@ -8,8 +10,6 @@ using QuartileStore.Commons.Domain.Entities.Stores;
 using QuartileStore.Commons.Infrastructure.SqlServer.Contexts;
 using QuartileStore.Commons.Infrastructure.SqlServer.Repositories;
 using QuartileStore.Commons.Infrastructure.Transactions;
-using QuartileStore.Commons.Services;
-using QuartileStore.Commons.Services.Contracts;
 
 namespace QuartileStore.Commons;
 

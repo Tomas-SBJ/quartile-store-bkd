@@ -1,6 +1,6 @@
-using QuartileStore.Commons.Dtos.Companies;
+using QuartileStore.Commons.Application.Dtos.Companies;
 
-namespace QuartileStore.Commons.Services.Contracts;
+namespace QuartileStore.Commons.Application.Services.Contracts;
 
 public interface ICompanyService
 {

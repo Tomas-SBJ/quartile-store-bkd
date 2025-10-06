@@ -3,8 +3,8 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Azure.Functions.Worker.Middleware;
 using Microsoft.Extensions.Logging;
-using QuartileStore.Commons.Dtos.Errors;
-using QuartileStore.Commons.Exceptions;
+using QuartileStore.Commons.Application.Dtos.Errors;
+using QuartileStore.Commons.Application.Exceptions;
 
 namespace QuartileStore.Products.Functions.Middleware;
 

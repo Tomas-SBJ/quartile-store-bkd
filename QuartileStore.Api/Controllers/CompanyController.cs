@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using QuartileStore.Commons.Dtos.Companies;
-using QuartileStore.Commons.Dtos.Errors;
-using QuartileStore.Commons.Services.Contracts;
+using QuartileStore.Commons.Application.Dtos.Companies;
+using QuartileStore.Commons.Application.Dtos.Errors;
+using QuartileStore.Commons.Application.Services.Contracts;
 
 namespace QuartileStore.Api.Controllers;
 
