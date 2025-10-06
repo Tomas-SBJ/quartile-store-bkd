@@ -74,6 +74,11 @@ internal class StoreService(
         if (store is null)
             throw new EntityNotFoundException($"Store with code: {code} was not found");
 
+        var hasProducts = await storeRepository.HasProductsAsync(store.Id);
+
+        if (hasProducts)
+            throw new DeleteConflictException("It is not possible to delete a store that has associated products");
+        
         storeRepository.Delete(store);
         await unitOfWork.Commit();
     }

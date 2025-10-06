@@ -19,4 +19,7 @@ internal class StoreRepository(
         await Entity
             .Include(x => x.Company)
             .FirstOrDefaultAsync(x => x.Code == storeCode && x.Company.Code == companyCode);
+
+    public async Task<bool> HasProductsAsync(Guid storeId) =>
+        await scopedContext.Context.Products.AnyAsync(x => x.StoreId == storeId);
 }

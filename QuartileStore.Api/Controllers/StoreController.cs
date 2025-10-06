@@ -92,6 +92,7 @@ public class StoreController(IStoreService storeService) : ControllerBase
     /// <param name="companyCode">The business code of the parent company.</param>
     /// <response code="204">If the store was deleted successfully.</response>
     /// <response code="404">If the company or store is not found.</response>
+    /// <response code="409">If the store cannot be deleted because it has associated products.</response>
     [HttpDelete("{code:int}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]

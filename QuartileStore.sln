@@ -6,6 +6,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuartileStore.Api", "Quarti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuartileStore.Products.Functions", "QuartileStore.Products.Functions\QuartileStore.Products.Functions.csproj", "{27767179-4F61-4D95-8A48-56C4E24B70A6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2F0C10D0-9EAC-4AD3-85AA-9A666A67110A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuartileStore.UnitTests", "QuartileStore.UnitTests\QuartileStore.UnitTests.csproj", "{FAEE5E54-7CF5-42A5-B792-EC8F1FCAA3F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,12 @@ Global
 		{27767179-4F61-4D95-8A48-56C4E24B70A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27767179-4F61-4D95-8A48-56C4E24B70A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27767179-4F61-4D95-8A48-56C4E24B70A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAEE5E54-7CF5-42A5-B792-EC8F1FCAA3F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAEE5E54-7CF5-42A5-B792-EC8F1FCAA3F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAEE5E54-7CF5-42A5-B792-EC8F1FCAA3F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAEE5E54-7CF5-42A5-B792-EC8F1FCAA3F1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FAEE5E54-7CF5-42A5-B792-EC8F1FCAA3F1} = {2F0C10D0-9EAC-4AD3-85AA-9A666A67110A}
 	EndGlobalSection
 EndGlobal
