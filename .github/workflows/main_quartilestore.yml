@@ -38,6 +38,12 @@ jobs:
       - name: Publish Web Api
         run: dotnet publish ./QuartileStore.Api/QuartileStore.Api.csproj -c Release -o ./publish
 
+      - name: Upload artifact for inspection
+          uses: actions/upload-artifact@v4
+          with:
+            name: api-publish-package
+            path: ./publish
+
       - name: Azure Login
         uses: azure/login@v2
         with:
