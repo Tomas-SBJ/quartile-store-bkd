@@ -46,7 +46,6 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           slot-name: ${{ env.AZURE_WEBAPP_SLOT }}
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: ${{ env.PACKAGE_PATH }}
 
       - name: Get staging hostname
