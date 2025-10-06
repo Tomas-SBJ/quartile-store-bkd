@@ -1,3 +1,4 @@
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -47,6 +48,8 @@ public static class DependencyInjection
     {
         var connectionString = configuration.GetConnectionString("SqlDb");
 
+        Console.WriteLine("DB: " + new SqlConnectionStringBuilder(connectionString));
+        
         services.AddDbContext<QuartileDatabaseContext>(options =>
             options.UseSqlServer(connectionString));
 
