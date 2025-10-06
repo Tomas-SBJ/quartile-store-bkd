@@ -40,9 +40,9 @@ jobs:
 
       - name: Upload artifact for inspection
         uses: actions/upload-artifact@v4
-          with:
-            name: api-publish-package
-            path: ./publish
+        with:
+          name: api-publish-package
+          path: ./publish
 
       - name: Azure Login
         uses: azure/login@v2
