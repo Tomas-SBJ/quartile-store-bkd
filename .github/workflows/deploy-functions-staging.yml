@@ -43,7 +43,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Deploy Function App to Staging slot
-        uses: azure/webapps-deploy@v3
+        uses: azure/functions-action@v1
         with:
           app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
           slot-name: ${{ env.AZURE_WEBAPP_SLOT }}
