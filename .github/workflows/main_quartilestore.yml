@@ -1,65 +1,60 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy ASP.Net Core app to Azure Web App - quartilestore
+name: Build, Test, Deploy (Staging) and Swap
 
 on:
   push:
-    branches:
-      - main
-  workflow_dispatch:
+    branches: [ main ]
 
 jobs:
-  build:
+  build-test-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read #This is required for actions/checkout
+
+    env:
+      DOTNET_VERSION: '9.0.x'
+      AZURE_WEBAPP_NAME: ${{ secrets.AZURE_WEBAPP_NAME }}
+      AZURE_WEBAPP_SLOT: ${{ secrets.AZURE_WEBAPP_SLOT }}
+      PACKAGE_PATH: ${{ secrets.AZURE_WEBAPP_PACKAGE_PATH }}
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Set up .NET Core
+      - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.x'
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
+      - name: Restore
+        run: dotnet restore
 
-      - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+      - name: Build (Release)
+        run: dotnet build --configuration Release --no-restore
 
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
-        with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+      - name: Test
+        run: dotnet test --configuration Release --no-build --collect "XPlat Code Coverage"
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
+      - name: Publish
+        run: dotnet publish ./QuartileStore.Api/QuartileStore.Api.csproj -c Release -o ${{ env.PACKAGE_PATH }}
 
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: .net-app
-      
-      - name: Login to Azure
+      - name: Azure Login
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_912E27EAFBCD479788802648AD642714 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D6259455D92542BC92C9623AE0E47A61 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_7CC9690ACA764F619C0E8CBA0572796C }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
+      - name: Deploy to Staging slot
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'quartilestore'
-          slot-name: 'Production'
-          package: .
-          
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          slot-name: ${{ env.AZURE_WEBAPP_SLOT }}
+          package: ${{ env.PACKAGE_PATH }}
+
+      - name: Health check staging
+        run: |
+          curl -f https://${{ env.AZURE_WEBAPP_NAME }}-staging.azurewebsites.net/health || exit 1
+
+      - name: Swap Staging -> Production
+        run: |
+          az webapp deployment slot swap \
+            --name ${{ env.AZURE_WEBAPP_NAME }} \
+            --resource-group <SEU_RESOURCE_GROUP> \
+            --slot ${{ env.AZURE_WEBAPP_SLOT }} \
+            --target-slot production
