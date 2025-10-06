@@ -36,16 +36,12 @@ jobs:
       - name: Publish
         run: dotnet publish ./QuartileStore.Api/QuartileStore.Api.csproj -c Release -o ${{ env.PACKAGE_PATH }}
 
-      - name: Azure Login
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
       - name: Deploy to Staging slot
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           slot-name: ${{ env.AZURE_WEBAPP_SLOT }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: ${{ env.PACKAGE_PATH }}
 
       - name: Get staging hostname
@@ -63,6 +59,11 @@ jobs:
             sleep 10
           done
           echo "Health check failed"; exit 1
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Swap Staging -> Production
         run: |
