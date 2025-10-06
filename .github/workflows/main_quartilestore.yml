@@ -32,6 +32,9 @@ jobs:
 
       - name: Test
         run: dotnet test --configuration Release --no-build --collect "XPlat Code Coverage"
+  
+      - name: Clean previous publish folder
+        run: rm -rf ./publish
 
       - name: Publish
         run: dotnet publish ./QuartileStore.Api/QuartileStore.Api.csproj -c Release -o ${{ env.PACKAGE_PATH }}
