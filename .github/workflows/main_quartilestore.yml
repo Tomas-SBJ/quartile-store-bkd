@@ -11,8 +11,7 @@ jobs:
     env:
       DOTNET_VERSION: '9.0.x'
       AZURE_WEBAPP_NAME: ${{ secrets.AZURE_WEBAPP_NAME }}
-      AZURE_WEBAPP_SLOT: ${{ secrets.AZURE_WEBAPP_SLOT }}
-      PACKAGE_PATH: ${{ secrets.AZURE_WEBAPP_PACKAGE_PATH }}
+      AZURE_WEBAPP_SLOT: staging
       AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
 
     steps:
@@ -36,8 +35,8 @@ jobs:
       - name: Clean previous publish folder
         run: rm -rf ./publish
 
-      - name: Publish
-        run: dotnet publish ./QuartileStore.Api/QuartileStore.Api.csproj -c Release -o ${{ env.PACKAGE_PATH }}
+      - name: Publish Web Api
+        run: dotnet publish ./QuartileStore.Api/QuartileStore.Api.csproj -c Release -o ./publish
 
       - name: Azure Login
         uses: azure/login@v2
@@ -49,7 +48,7 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           slot-name: ${{ env.AZURE_WEBAPP_SLOT }}
-          package: ${{ env.PACKAGE_PATH }}
+          package: ./publish
 
       - name: Get staging hostname
         id: host
