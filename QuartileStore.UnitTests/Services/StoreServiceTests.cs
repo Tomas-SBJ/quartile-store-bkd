@@ -28,7 +28,7 @@ public class StoreServiceTests
     }
 
     [Fact]
-    public async Task CreateAsync_WhenCompanyDoesNotExist_ShouldCreateCompany()
+    public async Task CreateAsync_WhenStoreDoesNotExist_ShouldCreateStore()
     {
         const int companyCode = 1;
 
